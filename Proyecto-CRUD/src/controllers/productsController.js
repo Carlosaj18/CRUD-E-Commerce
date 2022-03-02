@@ -14,7 +14,13 @@ const controllerProducts = {
 	},
 	// Create - Form to create
 	create: (req, res) => {
-		res.render('product-create-form');
+		let userAdmin = req.query.user;
+		if(userAdmin){
+			res.render('product-create-form');
+		} else {
+			res.send('El usuario no tiene lo permisos');
+		}
+		
 	},
 	// Create -  Method to store
 	store: (req, res) => {
@@ -25,8 +31,14 @@ const controllerProducts = {
 	},
 	// Update - Form to edit
 	edit: (req, res) => {
-		const product = productServices.findByPkEdit(req.body, req.params.id, req.file);
-		res.render('product-edit-form', {product: product});
+
+		let userAdmin = req.query.user;
+		if(userAdmin){
+			const product = productServices.findByPkEdit(req.body, req.params.id, req.file);
+			res.render('product-edit-form', {product: product, oldData: req.body});
+		} else {
+			res.send('El usuario no tiene lo permisos');
+		}
 	},
 	// Update - Method to update
 	update: (req, res) => {
@@ -39,8 +51,14 @@ const controllerProducts = {
 	},
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
-		productServices.destroy(req.params.id);
-		res.redirect('/products/')
+		let userAdmin = req.query.user;
+		if(userAdmin){
+			productServices.destroy(req.params.id);
+			res.redirect('/products/')
+		} {
+			res.send('El usuario no tiene lo permisos');
+		}
+		
 	}
 };
 

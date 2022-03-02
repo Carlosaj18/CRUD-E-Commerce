@@ -18,6 +18,14 @@ function writeFile(array){
 	fs.writeFileSync(productsFilePath)
 }
 const controller = {
+
+	validation: function (req, res) {
+        let userAdmin = req.query.user;
+		if(userAdmin) {
+			res.redirect('products/create');
+		}
+        // res.send("Hola Admin: " + userAdmin);
+    },
 	index: (req, res) => {
 		// Do the magic
 		let products = findAll();

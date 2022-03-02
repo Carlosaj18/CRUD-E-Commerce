@@ -46,21 +46,25 @@ const validations = [
     })
 ]
 
+// ************ Middleware Require ************
+const adminValidationMiddleware = require('../middleware/admin');
+
+
 /*** GET ALL PRODUCTS ***/ 
 router.get('/', productsController.list); 
 
 /*** CREATE ONE PRODUCT ***/ 
-router.get('/create', productsController.create); 
+router.get('/create', adminValidationMiddleware, productsController.create); 
 router.post('/create', fileUpload.single('imageProduct'), validations, productsController.store); 
 
 /*** GET ONE PRODUCT ***/ 
 router.get('/detail/:id?', productsController.detail); 
 
 /*** EDIT ONE PRODUCT ***/ 
-router.get('/edit/:id?', productsController.edit); 
+router.get('/edit/:id?', adminValidationMiddleware, productsController.edit); 
 router.put('/edit/:id?', fileUpload.single('imageProduct'), productsController.update);
 
 /*** DELETE ONE PRODUCT***/ 
-router.delete('/delete/:id?', productsController.destroy);
+router.delete('/delete/:id?', adminValidationMiddleware, productsController.destroy);
 
 module.exports = router;

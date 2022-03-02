@@ -16,6 +16,10 @@ app.use(express.static(path.join(__dirname, '../public')));  // Necesario para l
   app.use(express.json());
   app.use(cookieParser());
   app.use(methodOverride('_method')); // Pasar poder pisar el method="POST" en el formulario por PUT y DELETE
+  
+  // ************ Middleware Require ************
+  const logUserMiddleware = require('./middleware/userLogs');
+  app.use(logUserMiddleware);
 
 // ************ Template Engine - (don't touch) ************
 app.set('view engine', 'ejs');
