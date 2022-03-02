@@ -18,12 +18,10 @@ const controllerProducts = {
 	},
 	// Create -  Method to store
 	store: (req, res) => {
-		if(req.file){
-			productServices.create(req.body, req.file);
-			res.redirect('/products/');
-		} else {
-			res.render('product-create-form');
-		}
+		
+		productServices.create(req, req.body, req.file, res);
+		res.redirect('/products/');
+		
 	},
 	// Update - Form to edit
 	edit: (req, res) => {

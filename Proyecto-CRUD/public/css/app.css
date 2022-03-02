@@ -241,6 +241,11 @@ hr {
   box-shadow: 0 0 5px var(--green);
 }
 
+.is-invalid {
+  
+  border: 2px solid red;
+}
+
 
 /*====== Footer ======*/
 .main-footer {

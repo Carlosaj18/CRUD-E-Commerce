@@ -2,6 +2,8 @@
 const req = require("express/lib/request");
 const fs = require('fs');
 const path = require('path');
+const { validationResult } = require('express-validator');
+const res = require("express/lib/response");
 
 const service = {
 
@@ -26,7 +28,15 @@ const service = {
         });
         return productoEncontrado;
     },
-    create: function(payload, file){
+    create: function(errors, payload, file, res){
+
+		const resultValidation = validationResult(errors);
+		if(resultValidation.errors.length > 0) {
+			return res.render('product-create-form', 
+							  {errors: resultValidation.mapped(),
+							   oldData: payload});
+		}
+		
         let products = this.findAll();
 		let idProducto = this.generateId()
 
